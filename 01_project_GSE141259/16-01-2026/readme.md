@@ -1,0 +1,58 @@
+# 🫁 Lung Fibrosis scRNA-seq Analysis (GSE141259) - Day 1
+
+**Date:** 16-1-2026
+**Project:** Lung Regeneration & Fibrosis (Bleomycin Model)  
+**Author:** Nora
+
+---
+
+## 📝 Summary (摘要)
+This document records the progress of Day 1 analysis using the `GSE141259` dataset. The workflow covers raw data preprocessing, quality control, integration of author-provided annotations, and preliminary investigation of cell type dynamics during disease progression (PBS vs. Bleomycin time course).
+本文档记录了基于 `GSE141259` 数据集第一天的分析进度。工作流程涵盖了原始数据预处理、质量控制、作者注释信息的整合，以及对疾病进程（PBS 对照组与博来霉素损伤组的时间序列）中细胞类型动态的初步探究。
+
+---
+
+## 📂 Repository Structure (文件结构)
+* **`01_preprocessing_standard.R`**: Script for loading raw counts, QC, normalization, and metadata integration. (数据加载、质控、标准化及元数据整合脚本)
+* **`02_disease_comparison.R`**: Script for visualizing disease progression and validating marker genes. (疾病进程可视化及标志物验证脚本)
+
+---
+
+## 🛠️ Workflow & Achievements (工作流程与成果)
+
+### Part 1: Data Preprocessing & Authorization (数据预处理与身份确立)
+* **Setup Seurat Object**: Successfully loaded the raw count matrix and initialized the Seurat object.
+    * *成功加载原始计数矩阵并初始化 Seurat 对象。*
+* **Metadata Correction**: Corrected `orig.ident` from the auto-parsed "muc4169" to the project label "lianxixi".
+    * *修正元数据：将自动解析的 "muc4169" 标签更改为项目标签 "lianxixi"。*
+* **Annotation Integration**: Loaded author-provided metadata (`GSE141259_WholeLung_cellinfo.csv`) and mapped cell types to the object. Handled `NA` values by assigning them as "Unknown".
+    * *注释整合：加载作者提供的元数据文件，将细胞类型映射到对象中，并将缺失值标记为 "Unknown"。*
+* **Dimensionality Reduction**: Performed standard normalization, scaling, PCA, and UMAP visualization.
+    * *降维分析：完成标准化的归一化、缩放、PCA 及 UMAP 可视化。*
+
+### Part 2: Disease Progression Analysis (疾病进程分析)
+* **Time-Course Grouping**: Identified 7 experimental groups: `PBS` (Control) and `d3, d7, d10, d14, d21, d28` (Bleomycin injury model).
+    * *时间序列分组：识别出 7 个实验组：PBS（对照）及 d3-d28（博来霉素损伤模型）。*
+* **Dynamics Visualization**:
+    * **Split UMAP**: Visualized cell shifts across time points. (*拆分 UMAP 图：可视化细胞随时间的迁移。*)
+    * **Trend Lines**: Plotted proportion changes for key cell types (AM, AT2, Krt8 ADI). (*折线图：绘制关键细胞类型的比例变化趋势。*)
+* **Marker Validation (Krt8 Story)**:
+    * Verified `Sftpc` (AT2 marker) loss and `Krt8` (injury marker) emergence using **FeaturePlots**.
+    * Confirmed `Krt8` expression specifically in the **Krt8 ADI** population (and normal airway cells) but NOT in healthy AT2 cells using **Violin Plots**.
+    * *标志物验证：使用特征图验证了 Sftpc 的丢失和 Krt8 的出现；使用小提琴图证实 Krt8 特异性表达于损伤后的 Krt8 ADI 细胞群（及正常气管细胞），而在健康 AT2 细胞中不表达。*
+
+---
+
+## 📊 Key Findings (关键发现)
+1.  **Cellular Shift**: A massive infiltration of macrophages and loss of AT2 cells were observed starting from day 3.
+    * *细胞演变：从第 3 天开始观察到巨噬细胞的大量浸润和 AT2 细胞的丢失。*
+2.  **Emergence of Krt8+ Cells**: A distinct `Krt8 ADI` population appears around d10-d14, coinciding with the peak of tissue injury.
+    * *Krt8+ 细胞的出现：在 d10-d14（组织损伤高峰期）观察到明显的 `Krt8 ADI` 细胞群。*
+3.  **Molecular Validation**: Confirmed that `Krt8 ADI` cells express high levels of *Krt8*, distinguishing them from healthy alveolar type 2 cells.
+    * *分子验证：证实 `Krt8 ADI` 细胞高表达 *Krt8*，将其与健康的肺泡二型细胞区分开来。*
+
+---
+
+## 🔜 Next Steps (下一步计划)
+* Perform Differential Expression Analysis (DEG) to identify genes driving the AT2-to-Krt8 transition.
+    * *进行差异表达分析 (DEG)，寻找驱动 AT2 向 Krt8 状态转变的关键基因。*
