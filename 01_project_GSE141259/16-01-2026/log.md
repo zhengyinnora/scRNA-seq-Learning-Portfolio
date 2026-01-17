@@ -56,3 +56,48 @@ This document records the progress of Day 1 analysis using the `GSE141259` datas
 ## 🔜 Next Steps (下一步计划)
 * Perform Differential Expression Analysis (DEG) to identify genes driving the AT2-to-Krt8 transition.
     * *进行差异表达分析 (DEG)，寻找驱动 AT2 向 Krt8 状态转变的关键基因。*
+
+# 📂 Work Log: Differential Expression Analysis (Krt8 ADI vs AT2)
+
+**Date:** 2026-01-17  
+**Author:** Nora  
+**Script:** `03_scripts_runs/03_DEG_analysis.R`  
+**Data Source:** GSE141259 (Mouse Lung Fibrosis Model)
+
+---
+
+## 🎯 1. Objective (分析目标)
+To identify the molecular mechanisms driving the transition from healthy **AT2 cells** to the pathological **Krt8 ADI (Alveolar Differentiation Intermediate)** state. Specifically, to find Differentially Expressed Genes (DEGs) that characterize the "dedifferentiation" and "stress response" process.
+
+## 🛠️ 2. Workflow (分析流程)
+* **Data Loading:** Loaded the processed Seurat object (`lung_obj_final_analysis.rds`).
+* **Set Identity:** Switched active identity to `cell.type`.
+* **DEG Calculation:** Used `FindMarkers()` to compare `Krt8 ADI` (Group 1) vs `AT2 cells` (Group 2).
+* **Visualization:** Generated Volcano Plots and UMAP Feature Plots to validate findings spatially.
+
+## 🧬 3. Key Biological Findings (生物学发现)
+
+Through statistical analysis and spatial visualization, three key dimensions of the Krt8 ADI cell state were identified:
+
+### A. Identity Switch (身份互换)
+* **Loss of AT2 Marker:** `Sftpc` (Surfactant Protein C) was significantly **downregulated** (Log2FC ≈ -2.5), indicating a loss of normal alveolar function (Dedifferentiation).
+* **Gain of Injury Marker:** `Krt8` (Cytokeratin 8) was significantly **upregulated** (Log2FC ≈ 3.16), serving as the distinct marker for this injury-associated cell state.
+
+### B. Cellular Senescence (细胞衰老/停滞)
+* **Cycle Arrest:** `Cdkn1a` (p21) was highly upregulated (Top 10 upregulated genes). This suggests the cells are locked in a senescent state (cell cycle arrest) and unable to complete regeneration.
+
+### C. Stress Response (压力应激)
+* **High Stress Level:** `S100a6` and `Clu` (Clusterin) showed the most dramatic upregulation (Log2FC > 5). This reflects an intense survival response to tissue injury.
+
+## 📊 4. Visual Evidence (结果图表)
+
+| Plot Type | Filename | Description |
+| :--- | :--- | :--- |
+| **Volcano Plot** | `lianxixi_Volcano_Krt8_Final.png` | Highlights the global shift: Sftpc (Left/Down) vs Krt8/S100a6/Cdkn1a (Right/Up). |
+| **Feature Plot** | `lianxixi_FeaturePlot_KeyGenes.png` | Spatial confirmation: `Krt8` expression is exclusive to the specific "bridge" population where `Sftpc` expression is lost, co-localizing perfectly with stress markers `S100a6` and `Cdkn1a`. |
+
+## 📝 5. Conclusion (总结)
+The analysis confirms that **Krt8 ADI cells** are not merely "different" AT2 cells, but a distinct, pathological cell state characterized by **dedifferentiation (loss of Sftpc)**, **senescence (Cdkn1a)**, and **high stress (S100a6)**. They represent a "stalled" regeneration intermediate in lung fibrosis.
+
+---
+*Created with R Seurat v4/v5*
