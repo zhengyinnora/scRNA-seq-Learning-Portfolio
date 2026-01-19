@@ -101,3 +101,48 @@ The analysis confirms that **Krt8 ADI cells** are not merely "different" AT2 cel
 
 ---
 *Created with R Seurat v4/v5*
+
+---
+
+# 🧬 Work Log: Functional Enrichment Analysis (GO:BP)
+
+**Date:** 2026-01-19  
+**Author:** Nora  
+**Script:** `03_scripts_runs/04_Enrichment_analysis.R`  
+**Input Data:** Up-regulated DEGs from Krt8 ADI cells (vs AT2)
+
+## 🎯 1. Objective (分析目标)
+To decode the functional state of **Krt8 ADI cells** by mapping the previously identified up-regulated genes (e.g., *Krt8*, *S100a6*, *Clu*) to biological pathways using Gene Ontology (GO) enrichment analysis. We aim to answer: "What are these damaged cells actively *doing*?"
+
+## 🛠️ 2. Methodology (方法)
+* **Filtering:** Selected significant up-regulated genes (`adj.P.Val < 0.05` & `log2FC > 0.5`) from the DEG table.
+* **Annotation:** Converted Gene Symbols to Entrez IDs using `org.Mm.eg.db`.
+* **Enrichment:** Performed GO Biological Process (BP) enrichment using `clusterProfiler::enrichGO`.
+* **Visualization:** Generated a Dotplot to visualize the top 15 most significant pathways.
+
+## 🧬 3. Key Findings (核心发现)
+The analysis reveals that Krt8 ADI cells are metabolically hyper-active despite being cell-cycle arrested.
+
+### A. Hyper-Biosynthesis (疯狂的合成代谢)
+* **Top Terms:** `cytoplasmic translation`, `ribosome biogenesis`, `translation at synapse`.
+* **Interpretation:** The most significant function is **protein synthesis**. This explains the high expression of structural proteins (*Krt8*) and stress-response proteins (*S100a6*, *Clu*) identified in the previous step. The cells are effectively "factories" running at full capacity to produce survival factors.
+
+### B. High Metabolic Demand (高能量消耗)
+* **Key Terms:** `aerobic respiration`, `oxidative phosphorylation`, `ATP synthesis`.
+* **Interpretation:** The protein synthesis machinery requires immense energy. The enrichment of respiratory pathways confirms that these cells are burning fuel (ATP) aggressively to maintain their "stalled" but highly active stress state.
+
+## 📊 4. Visual Evidence (结果图表)
+
+| Plot Type | Filename | Description |
+| :--- | :--- | :--- |
+| **Dotplot** | `GO_Enrichment_Dotplot.png` | Shows the top enriched biological processes. The dominance of "Translation" (Red/Large bubbles) provides strong evidence for the high-biosynthetic state of Krt8 ADI cells. |
+
+## 📝 5. Integrated Conclusion (综合结论)
+Combining the DEG results (Jan 17) with today's Enrichment results (Jan 19):
+**Krt8 ADI cells** are defined by a paradox:
+1.  **Stalled Growth:** They are not dividing (high *Cdkn1a*).
+2.  **Hyper-Active Metabolism:** They are actively synthesizing proteins and generating ATP (GO results).
+This confirms they are in a **Senescence-Associated Secretory Phenotype (SASP)-like state**, prioritizing survival and stress signaling over regeneration.
+
+---
+*Created with clusterProfiler / R*
