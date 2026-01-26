@@ -146,3 +146,67 @@ This confirms they are in a **Senescence-Associated Secretory Phenotype (SASP)-l
 
 ---
 *Created with clusterProfiler / R*
+
+
+# 🧬 Work Log: Trajectory & Pseudotime Analysis (Monocle3)
+
+**Date:** 2026-01-26  
+**Author:** Nora  
+**Script:** `05_Trajectory_Analysis_Complete.R`  
+**Input Data:** Seurat Object (`lung_obj_final_analysis.rds`) - Subset of AT2 & ADI lineages.
+
+---
+
+## 🎯 1. Objective (分析目标)
+
+To reconstruct the continuous developmental trajectory of alveolar regeneration and quantify the transdifferentiation process from healthy **AT2 cells** to the injury-induced **Krt8+ ADI** state.
+We aim to answer: *"Is there a continuous path connecting these two states, and what are the driver genes orchestrating this transition?"*
+
+---
+
+## 🛠️ 2. Methodology (方法与修正)
+
+The analysis was performed using **Monocle3** with the following key steps:
+
+* **Data Structure Conversion:** Successfully converted the Seurat object to Monocle3 `cell_data_set` (CDS).
+    * *Correction:* Manually transferred `cell_type` metadata to resolve the ID matching error.
+* **Trajectory Inference:** Learned the principal graph on the UMAP embedding.
+    * *Result:* A continuous "main path" was identified connecting the AT2 cluster to the ADI cluster.
+* **Pseudotime Calculation:**
+    * Defined the **Root Node** based on the highest density of `AT2 cells`.
+    * Calculated pseudotime values for all cells (0 = Start/AT2, >50 = End/ADI).
+* **Driver Gene Identification:**
+    * Used **Moran’s I test** (`graph_test`) to find genes with spatially coherent expression along the trajectory.
+    * Grouped these genes into **Co-expression Modules** to identify the ADI-specific gene signature.
+
+---
+
+## 🧬 3. Key Findings (核心发现)
+
+### A. Confirmation of Lineage Plasticity (细胞可塑性验证)
+The trajectory analysis confirms a direct, continuous lineage relationship between AT2 cells and Krt8 ADI cells. The process is not discrete but shows a gradual transition, supporting the hypothesis of **AT2-to-ADI transdifferentiation**.
+
+### B. Pseudotime Gradient (拟时序梯度)
+* **Early Phase:** Corresponds to naive AT2 cells (High expression of surfactant genes).
+* **Late Phase:** Corresponds to the Krt8 ADI state, characterized by the loss of AT2 identity and acquisition of a stress/injury phenotype.
+
+### C. Identification of the "ADI Module" (锁定关键基因团伙)
+We successfully identified a specific gene module that is sharply upregulated at the trajectory terminus (ADI state).
+* **Key Markers identified:** `Krt8`, `Krt19`, `Lgals3`.
+* **Biological Implication:** This module represents the core transcriptional machinery driving the injury response and preventing re-differentiation (the "stalled" state).
+
+---
+
+## 📊 4. Visual Evidence (结果图表)
+
+| Plot Type | Filename | Description |
+| :--- | :--- | :--- |
+| **Trajectory** | `Monocle3_Trajectory_Initial.png` | Visualization of the learned black line (principal graph) on UMAP. |
+| **Pseudotime** | `Monocle3_Pseudotime_Final.png` | Cells colored by pseudotime (Purple -> Yellow) showing the direction of differentiation. |
+| **Heatmap** | `Monocle3_Heatmap_Modules.png` | Heatmap of gene modules, revealing the specific group of genes activated at the end of the trajectory. |
+| **Gene List** | `Krt8_ADI_Module_Genes.csv` | **[Important]** The full list of genes co-expressed with Krt8 (The "Suspect List"). |
+
+---
+
+## 📝 Next Steps
+* Perform functional enrichment analysis (GO/KEGG) on the identified "Krt8 Module" to understand the biological functions (e.g., wound healing, senescence).
