@@ -57,6 +57,7 @@ This document records the progress of Day 1 analysis using the `GSE141259` datas
 * Perform Differential Expression Analysis (DEG) to identify genes driving the AT2-to-Krt8 transition.
     * *进行差异表达分析 (DEG)，寻找驱动 AT2 向 Krt8 状态转变的关键基因。*
 
+---
 # 📂 Work Log: Differential Expression Analysis (Krt8 ADI vs AT2)
 
 **Date:** 2026-01-17  
@@ -147,12 +148,12 @@ This confirms they are in a **Senescence-Associated Secretory Phenotype (SASP)-l
 ---
 *Created with clusterProfiler / R*
 
-
+---
 # 🧬 Work Log: Trajectory & Pseudotime Analysis (Monocle3)
 
 **Date:** 2026-01-26  
 **Author:** Nora  
-**Script:** `05_Trajectory_Analysis_Complete.R`  
+**Script:** `05_Trajectory_Analysis.R`  
 **Input Data:** Seurat Object (`lung_obj_final_analysis.rds`) - Subset of AT2 & ADI lineages.
 
 ---
