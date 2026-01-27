@@ -211,3 +211,43 @@ We successfully identified a specific gene module that is sharply upregulated at
 
 ## 📝 Next Steps
 * Perform functional enrichment analysis (GO/KEGG) on the identified "Krt8 Module" to understand the biological functions (e.g., wound healing, senescence).
+
+---
+# 📅 2026-01-27: Functional Enrichment Analysis (GO Terms)
+
+**Script:** `06_Module_Enrichment.R`
+**Input Data:** `Krt8_ADI_Module_Genes.csv` (The target gene list identified in Step 05)
+**Status:** ✅ Completed
+
+## 🎯 1. Objective (分析目标)
+To decode the biological function of the "Krt8 ADI Module".
+We know *which* genes are in this module (e.g., *Krt8*, *Lgals3*), but we need to understand *what* cellular processes they orchestrate.
+* **Question:** Are these cells dying? Proliferating? Or differentiating?
+
+## 🛠️ 2. Methodology (方法)
+* **Tool:** `clusterProfiler` (R package).
+* **Database:** `org.Mm.eg.db` (Mouse Genome).
+* **Analysis Type:** Gene Ontology (GO) Enrichment - **Biological Process (BP)**.
+* **Process:**
+    1.  Converted Gene Symbols to Entrez IDs.
+    2.  Performed enrichment test (p-value cutoff < 0.05).
+    3.  Visualized top 15 enriched terms using a **Dotplot**.
+
+## 🧬 3. Key Findings (核心发现)
+The analysis reveals a distinct "Reprogramming & Repair" signature:
+
+1.  **Squamous Metaplasia (鳞状化生):**
+    * **Top Terms:** `epidermis development`, `skin development`.
+    * **Interpretation:** The lung AT2 cells are adopting "skin-like" properties (expression of Keratins). This is a classic stress response to thicken the alveolar barrier and protect against injury (forming a "callus").
+2.  **Barrier Reconstruction (屏障重建):**
+    * **Top Terms:** `tight junction assembly`, `cell-cell junction organization`.
+    * **Interpretation:** The cells are actively building connections to seal the injured alveoli and prevent leakage.
+3.  **Regenerative Potential (再生潜力):**
+    * **Top Terms:** `lung morphogenesis`, `epithelial tube branching`.
+    * **Interpretation:** Despite the injury phenotype, the cells retain the developmental memory required to regenerate lung structure.
+
+## 📊 4. Output Files (产出)
+* 🖼️ **Visualization:** `Krt8_Module_GO_Enrichment.png` (The Dotplot).
+* 📋 **Full Table:** `Krt8_Module_GO_Table.csv` (Detailed statistics for all terms).
+
+> **Conclusion:** The Krt8 ADI state represents a **"Barrier-Strengthening & Repair"** phase, characterized by the transient activation of epidermal programs to survive acute injury.
