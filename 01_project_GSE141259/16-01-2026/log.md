@@ -251,3 +251,44 @@ The analysis reveals a distinct "Reprogramming & Repair" signature:
 * 📋 **Full Table:** `Krt8_Module_GO_Table.csv` (Detailed statistics for all terms).
 
 > **Conclusion:** The Krt8 ADI state represents a **"Barrier-Strengthening & Repair"** phase, characterized by the transient activation of epidermal programs to survive acute injury.
+
+
+---
+# 📅 2026-01-27: Pseudotime Expression Kinetics (Gene Trends)
+
+**Script:** `07_Gene_Trends.R`
+**Input Data:** `lung_monocle_final.rds`
+**Status:** ✅ Completed
+
+## 🎯 1. Objective (分析目标)
+To visualize the dynamic expression changes of specific marker genes along the inferred trajectory.
+We aim to validate the identity switch from AT2 to ADI at the single-gene level: *"Do AT2 markers actually drop? Do ADI markers actually rise?"*
+
+## 🛠️ 2. Methodology (方法)
+* **Function:** `monocle3::plot_genes_in_pseudotime`.
+* **Target Genes Selected:**
+    * **AT2 Lineage:** *Sftpc, Sftpb* (Surfactant proteins).
+    * **ADI/Injury Lineage:** *Krt8, Krt19, Lgals3* (Stress markers).
+    * **Proliferation:** *Mki67* (Cell cycle marker).
+* **Visualization:** Modeled expression trends (black lines) overlaid on single-cell expression values (colored dots).
+
+## 🧬 3. Key Findings (核心发现)
+The kinetic plots reveal distinct expression patterns confirming the transdifferentiation model:
+
+1.  **Loss of AT2 Identity (Sftpc/Sftpb):**
+    * **Trend:** Sharp, monotonic decrease along pseudotime.
+    * **Meaning:** Cells rapidly silence their surfactant production programs upon injury.
+2.  **Gain of Injury State (Krt8/Krt19):**
+    * **Trend:** While the smoothed average line remains low (due to zero-inflation/dropout), a distinct sub-population of cells at the terminus (Yellow phase) shows high expression (dots > 3.0).
+    * **Meaning:** A specific subset of cells successfully acquires the ADI phenotype.
+3.  **Transient Driver (Lgals3):**
+    * **Trend:** Strong, bell-shaped upregulation during the intermediate phase.
+    * **Meaning:** *Lgals3* appears to be a robust driver activated during the transition process.
+4.  **No Proliferation (Mki67):**
+    * **Trend:** Flat/Low expression throughout.
+    * **Meaning:** Confirms the ADI state is a result of direct conversion (transdifferentiation) without active cell division (cell cycle arrest).
+
+## 📊 4. Output Files (产出)
+* 🖼️ **Trend Plot:** `Monocle3_Gene_Trends_LinePlot.png` (Visualization of the 6 key genes).
+
+> **Conclusion:** The gene kinetics provide molecular evidence for the AT2-to-ADI transition, characterized by the synchronized downregulation of homeostatic genes and upregulation of stress-response genes.
