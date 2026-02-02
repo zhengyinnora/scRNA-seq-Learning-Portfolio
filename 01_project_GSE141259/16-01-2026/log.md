@@ -292,3 +292,38 @@ The kinetic plots reveal distinct expression patterns confirming the transdiffer
 * 🖼️ **Trend Plot:** `Monocle3_Gene_Trends_LinePlot.png` (Visualization of the 6 key genes).
 
 > **Conclusion:** The gene kinetics provide molecular evidence for the AT2-to-ADI transition, characterized by the synchronized downregulation of homeostatic genes and upregulation of stress-response genes.
+
+
+
+---
+# 📅 2026-02-02: Cell-Cell Communication Inference (Global Network)
+
+**Script:** `08_CellChat_Analysis.R`
+**Input Data:** `lung_obj_final_analysis.rds` (Seurat Object)
+**Status:** ✅ Completed
+
+## 🎯 1. Objective (分析目标)
+To infer the intercellular communication network governing the lung injury response.
+We aim to move beyond single-cell identify (AT2 vs. ADI) and understand the **social network** of the tissue: *"Who is signaling to whom during the regeneration process?"*
+
+## 🛠️ 2. Methodology (方法)
+* **Tool:** `CellChat` (v1.x).
+* **Database:** `CellChatDB.mouse` (Full database).
+* **Process:**
+    1.  **Preprocessing:** Identified over-expressed ligands and receptors in each cell group.
+    2.  **Inference:** Computed communication probabilities using the `triMean` method.
+    3.  **Aggregation:** Aggregated all L-R pairs to visualize the total communication flow.
+
+## 🧬 3. Key Findings (初步观察)
+* **High Connectivity:** The global network reveals a dense, complex web of interactions (the "Hairball" phenotype), indicating robust cross-talk between Epithelial (AT2/ADI), Immune (Macrophages), and Stromal (Fibroblasts) compartments.
+* **Distinction:**
+    * **Number Plot:** Shows potential connectivity bandwidth (how many pathways are available).
+    * **Weight Plot:** Shows actual signaling intensity (how active these pathways are).
+
+## 📊 4. Output Files (产出)
+* 💾 **CellChat Object:** `lung_cellchat.rds` (Saved for downstream analysis).
+* 🖼️ **Global Networks:**
+    * `CellChat_Net_Number.png` (Interaction Frequency).
+    * `CellChat_Net_Weights.png` (Interaction Strength).
+
+> **Next Step:** Perform "Sender/Receiver" analysis to specifically zoom in on signals received by AT2 cells (Input) and signals sent by Krt8 ADI cells (Output).
