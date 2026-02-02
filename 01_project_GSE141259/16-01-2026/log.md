@@ -325,5 +325,44 @@ We aim to move beyond single-cell identify (AT2 vs. ADI) and understand the **so
 * 🖼️ **Global Networks:**
     * `CellChat_Net_Number.png` (Interaction Frequency).
     * `CellChat_Net_Weights.png` (Interaction Strength).
+    * ---
+# 📅 2026-02-02 (Part 2): Ligand-Receptor Specifics (Zoom-in Analysis)
+
+**Script:** `08_CellChat_Analysis.R` (Part 2)
+**Status:** ✅ Completed
+
+## 🎯 1. Objective (分析目标)
+To decode the specific molecular signals driving the AT2-to-ADI transition.
+Instead of looking at the global network, we perform a directed analysis to answer two specific questions:
+1.  **Incoming:** What signals from the microenvironment are "bullying" AT2 cells?
+2.  **Outgoing:** What pathogenic signals are Krt8 ADI cells spreading to their neighbors?
+
+## 🛠️ 2. Methodology (方法)
+* **Visualization:** `netVisual_bubble` (Bubble Plots).
+* **Strategy:**
+    * **Input Analysis:** Targets restricted to "AT2 cells".
+    * **Output Analysis:** Sources restricted to "Krt8 ADI".
+* **Key Metrics:** Ligand-Receptor pairs plotted by communication probability (bubble size) and expression level (color).
+
+## 🧬 3. Key Findings (核心机制发现)
+
+### A. Environment Stress on AT2 (Incoming)
+* **Key Signal:** `Fn1 - Sdc4` (Fibronectin - Syndecan-4).
+* **Senders:** Fibroblasts, Myofibroblasts, and Fn1+ Macrophages.
+* **Interpretation:** AT2 cells are being subjected to intense **Extracellular Matrix (ECM) signaling**. The high interaction with Fibronectin (`Fn1`) suggests that **mechanical stress/stiffening** of the niche is a primary driver forcing AT2 cells to lose their identity and undergo reprogramming.
+
+### B. Pro-inflammatory Feedback by ADI (Outgoing)
+* **Key Signals:** `Mif - (Cd74+...)` and `Spp1 - Cd44`.
+* **Receivers:** Macrophages (AM, M2) and Proliferating cells.
+* **Interpretation:** The Krt8 ADI state is not passive. It actively secretes potent pro-inflammatory mediators:
+    * **MIF** (Macrophage Migration Inhibitory Factor): Keeps immune cells trapped and active in the injury site.
+    * **SPP1** (Osteopontin): A known driver of fibrosis and inflammation.
+    * **Conclusion:** ADI cells create a **pathogenic feed-forward loop**, preventing inflammation resolution.
+
+## 📊 4. Output Files (产出)
+* 🖼️ `CellChat_Incoming_AT2.png`: Shows the fibrotic signals received by AT2.
+* 🖼️ `CellChat_Outgoing_ADI.png`: Shows the inflammatory signals sent by ADI.
+
+> **Summary:** The analysis identifies the **Fn1-Sdc4 axis** as a potential upstream trigger for AT2 injury, and the **Mif/Spp1 axis** as a downstream consequence of the ADI state.
 
 > **Next Step:** Perform "Sender/Receiver" analysis to specifically zoom in on signals received by AT2 cells (Input) and signals sent by Krt8 ADI cells (Output).
