@@ -410,3 +410,33 @@ To move beyond gene expression and identify the **upstream Transcription Factors
 > **Summary:** The analysis successfully identifies the **Sox9-Twist1-Atf6 axis** as the core regulatory network. Injury triggers **ER Stress (Atf6)**, which activates **Sox9** for reprogramming and **Twist1** for fibrosis.
 
 **Next Step:** Perform Pathway Activity Analysis (PROGENy/UCell) to score specific biological processes (e.g., Hypoxia, TGF-b signaling) across the trajectory.
+
+
+# 📅 2026-02-07 (Part 4): Pathway Activity Scoring (UCell)
+
+**Script:** `10_Pathway_Scoring_UCell.R`
+**Status:** ✅ SUCCEEDED (Dependencies fixed via BiocManager)
+
+## 🎯 1. Objective
+To quantify specific biological states (Senescence, EMT, Hypoxia) across cell types, specifically asking: *"How 'stressed' are the ADI cells compared to normal AT2?"*
+
+## 🛠️ 2. Methodology
+* **Tool:** `UCell` (Rank-based scoring, robust to batch effects).
+* **Gene Sets:**
+    * **ADI Signature:** (Krt8, Cldn4...) - Positive control.
+    * **EMT:** (Vim, Fn1, Twist1...) - Fibrosis indicator.
+    * **Senescence:** (Cdkn2a, Il6...) - Aging/SASP indicator.
+    * **Hypoxia:** (Hif1a, Vegfa...) - Metabolic stress.
+
+## 🧬 3. Key Findings (from Violin Plots)
+* **Validation:** Fibroblasts showed the highest **EMT scores**, validating the gene set accuracy.
+* **The ADI Phenotype:**
+    * **Partial EMT:** Krt8 ADI cells exhibit significantly higher EMT scores than AT2 cells, confirming their transition towards a mesenchymal state.
+    * **Senescence & Hypoxia:** ADI cells are distinctively marked by high Hypoxia and Senescence scores, suggesting they are "stuck" in a stressed, non-regenerative state.
+    * **Inflammation:** High inflammatory scores align with the previous CellChat finding (Mif/Spp1 secretion).
+
+## 📊 4. Output Files
+* 🖼️ `Pathway_UCell_Violin.png`: Shows the stepwise elevation of stress markers from AT2 -> ADI.
+* 🖼️ `Pathway_UCell_UMAP.png`: Visualizes the spatial restriction of these states.
+
+> **Conclusion:** The AT2-to-ADI transition is not just a change in markers (Krt8+), but a fundamental shift in cell state involving **metabolic reprogramming (Hypoxia)**, **cell cycle arrest (Senescence)**, and **fibrogenic activation (EMT)**.
