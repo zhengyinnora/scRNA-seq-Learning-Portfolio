@@ -6,21 +6,21 @@
 
 ---
 
-## 📝 Summary (摘要)
+## 📝 Summary
 This document records the progress of Day 1 analysis using the `GSE141259` dataset. The workflow covers raw data preprocessing, quality control, integration of author-provided annotations, and preliminary investigation of cell type dynamics during disease progression (PBS vs. Bleomycin time course).
 本文档记录了基于 `GSE141259` 数据集第一天的分析进度。工作流程涵盖了原始数据预处理、质量控制、作者注释信息的整合，以及对疾病进程（PBS 对照组与博来霉素损伤组的时间序列）中细胞类型动态的初步探究。
 
 ---
 
-## 📂 Repository Structure (文件结构)
+## 📂 Repository Structure
 * **`01_preprocessing_standard.R`**: Script for loading raw counts, QC, normalization, and metadata integration. (数据加载、质控、标准化及元数据整合脚本)
 * **`02_disease_comparison.R`**: Script for visualizing disease progression and validating marker genes. (疾病进程可视化及标志物验证脚本)
 
 ---
 
-## 🛠️ Workflow & Achievements (工作流程与成果)
+## 🛠️ Workflow & Achievements
 
-### Part 1: Data Preprocessing & Authorization (数据预处理与身份确立)
+### Part 1: Data Preprocessing & Authorization
 * **Setup Seurat Object**: Successfully loaded the raw count matrix and initialized the Seurat object.
     * *成功加载原始计数矩阵并初始化 Seurat 对象。*
 * **Metadata Correction**: Corrected `orig.ident` from the auto-parsed "muc4169" to the project label "lianxixi".
@@ -30,7 +30,7 @@ This document records the progress of Day 1 analysis using the `GSE141259` datas
 * **Dimensionality Reduction**: Performed standard normalization, scaling, PCA, and UMAP visualization.
     * *降维分析：完成标准化的归一化、缩放、PCA 及 UMAP 可视化。*
 
-### Part 2: Disease Progression Analysis (疾病进程分析)
+### Part 2: Disease Progression Analysis
 * **Time-Course Grouping**: Identified 7 experimental groups: `PBS` (Control) and `d3, d7, d10, d14, d21, d28` (Bleomycin injury model).
     * *时间序列分组：识别出 7 个实验组：PBS（对照）及 d3-d28（博来霉素损伤模型）。*
 * **Dynamics Visualization**:
@@ -43,7 +43,7 @@ This document records the progress of Day 1 analysis using the `GSE141259` datas
 
 ---
 
-## 📊 Key Findings (关键发现)
+## 📊 Key Findings
 1.  **Cellular Shift**: A massive infiltration of macrophages and loss of AT2 cells were observed starting from day 3.
     * *细胞演变：从第 3 天开始观察到巨噬细胞的大量浸润和 AT2 细胞的丢失。*
 2.  **Emergence of Krt8+ Cells**: A distinct `Krt8 ADI` population appears around d10-d14, coinciding with the peak of tissue injury.
@@ -53,7 +53,7 @@ This document records the progress of Day 1 analysis using the `GSE141259` datas
 
 ---
 
-## 🔜 Next Steps (下一步计划)
+## 🔜 Next Steps
 * Perform Differential Expression Analysis (DEG) to identify genes driving the AT2-to-Krt8 transition.
     * *进行差异表达分析 (DEG)，寻找驱动 AT2 向 Krt8 状态转变的关键基因。*
 
@@ -67,37 +67,37 @@ This document records the progress of Day 1 analysis using the `GSE141259` datas
 
 ---
 
-## 🎯 1. Objective (分析目标)
+## 🎯 1. Objective
 To identify the molecular mechanisms driving the transition from healthy **AT2 cells** to the pathological **Krt8 ADI (Alveolar Differentiation Intermediate)** state. Specifically, to find Differentially Expressed Genes (DEGs) that characterize the "dedifferentiation" and "stress response" process.
 
-## 🛠️ 2. Workflow (分析流程)
+## 🛠️ 2. Workflow
 * **Data Loading:** Loaded the processed Seurat object (`lung_obj_final_analysis.rds`).
 * **Set Identity:** Switched active identity to `cell.type`.
 * **DEG Calculation:** Used `FindMarkers()` to compare `Krt8 ADI` (Group 1) vs `AT2 cells` (Group 2).
 * **Visualization:** Generated Volcano Plots and UMAP Feature Plots to validate findings spatially.
 
-## 🧬 3. Key Biological Findings (生物学发现)
+## 🧬 3. Key Biological Findings
 
 Through statistical analysis and spatial visualization, three key dimensions of the Krt8 ADI cell state were identified:
 
-### A. Identity Switch (身份互换)
+### A. Identity Switch
 * **Loss of AT2 Marker:** `Sftpc` (Surfactant Protein C) was significantly **downregulated** (Log2FC ≈ -2.5), indicating a loss of normal alveolar function (Dedifferentiation).
 * **Gain of Injury Marker:** `Krt8` (Cytokeratin 8) was significantly **upregulated** (Log2FC ≈ 3.16), serving as the distinct marker for this injury-associated cell state.
 
-### B. Cellular Senescence (细胞衰老/停滞)
+### B. Cellular Senescence
 * **Cycle Arrest:** `Cdkn1a` (p21) was highly upregulated (Top 10 upregulated genes). This suggests the cells are locked in a senescent state (cell cycle arrest) and unable to complete regeneration.
 
-### C. Stress Response (压力应激)
+### C. Stress Response
 * **High Stress Level:** `S100a6` and `Clu` (Clusterin) showed the most dramatic upregulation (Log2FC > 5). This reflects an intense survival response to tissue injury.
 
-## 📊 4. Visual Evidence (结果图表)
+## 📊 4. Visual Evidence
 
 | Plot Type | Filename | Description |
 | :--- | :--- | :--- |
 | **Volcano Plot** | `lianxixi_Volcano_Krt8_Final.png` | Highlights the global shift: Sftpc (Left/Down) vs Krt8/S100a6/Cdkn1a (Right/Up). |
 | **Feature Plot** | `lianxixi_FeaturePlot_KeyGenes.png` | Spatial confirmation: `Krt8` expression is exclusive to the specific "bridge" population where `Sftpc` expression is lost, co-localizing perfectly with stress markers `S100a6` and `Cdkn1a`. |
 
-## 📝 5. Conclusion (总结)
+## 📝 5. Conclusion
 The analysis confirms that **Krt8 ADI cells** are not merely "different" AT2 cells, but a distinct, pathological cell state characterized by **dedifferentiation (loss of Sftpc)**, **senescence (Cdkn1a)**, and **high stress (S100a6)**. They represent a "stalled" regeneration intermediate in lung fibrosis.
 
 ---
@@ -112,33 +112,33 @@ The analysis confirms that **Krt8 ADI cells** are not merely "different" AT2 cel
 **Script:** `03_scripts_runs/04_Enrichment_analysis.R`  
 **Input Data:** Up-regulated DEGs from Krt8 ADI cells (vs AT2)
 
-## 🎯 1. Objective (分析目标)
+## 🎯 1. Objective
 To decode the functional state of **Krt8 ADI cells** by mapping the previously identified up-regulated genes (e.g., *Krt8*, *S100a6*, *Clu*) to biological pathways using Gene Ontology (GO) enrichment analysis. We aim to answer: "What are these damaged cells actively *doing*?"
 
-## 🛠️ 2. Methodology (方法)
+## 🛠️ 2. Methodology
 * **Filtering:** Selected significant up-regulated genes (`adj.P.Val < 0.05` & `log2FC > 0.5`) from the DEG table.
 * **Annotation:** Converted Gene Symbols to Entrez IDs using `org.Mm.eg.db`.
 * **Enrichment:** Performed GO Biological Process (BP) enrichment using `clusterProfiler::enrichGO`.
 * **Visualization:** Generated a Dotplot to visualize the top 15 most significant pathways.
 
-## 🧬 3. Key Findings (核心发现)
+## 🧬 3. Key Findings
 The analysis reveals that Krt8 ADI cells are metabolically hyper-active despite being cell-cycle arrested.
 
-### A. Hyper-Biosynthesis (疯狂的合成代谢)
+### A. Hyper-Biosynthesis
 * **Top Terms:** `cytoplasmic translation`, `ribosome biogenesis`, `translation at synapse`.
 * **Interpretation:** The most significant function is **protein synthesis**. This explains the high expression of structural proteins (*Krt8*) and stress-response proteins (*S100a6*, *Clu*) identified in the previous step. The cells are effectively "factories" running at full capacity to produce survival factors.
 
-### B. High Metabolic Demand (高能量消耗)
+### B. High Metabolic Demand
 * **Key Terms:** `aerobic respiration`, `oxidative phosphorylation`, `ATP synthesis`.
 * **Interpretation:** The protein synthesis machinery requires immense energy. The enrichment of respiratory pathways confirms that these cells are burning fuel (ATP) aggressively to maintain their "stalled" but highly active stress state.
 
-## 📊 4. Visual Evidence (结果图表)
+## 📊 4. Visual Evidence
 
 | Plot Type | Filename | Description |
 | :--- | :--- | :--- |
 | **Dotplot** | `GO_Enrichment_Dotplot.png` | Shows the top enriched biological processes. The dominance of "Translation" (Red/Large bubbles) provides strong evidence for the high-biosynthetic state of Krt8 ADI cells. |
 
-## 📝 5. Integrated Conclusion (综合结论)
+## 📝 5. Integrated Conclusion
 Combining the DEG results (Jan 17) with today's Enrichment results (Jan 19):
 **Krt8 ADI cells** are defined by a paradox:
 1.  **Stalled Growth:** They are not dividing (high *Cdkn1a*).
@@ -158,14 +158,14 @@ This confirms they are in a **Senescence-Associated Secretory Phenotype (SASP)-l
 
 ---
 
-## 🎯 1. Objective (分析目标)
+## 🎯 1. Objective
 
 To reconstruct the continuous developmental trajectory of alveolar regeneration and quantify the transdifferentiation process from healthy **AT2 cells** to the injury-induced **Krt8+ ADI** state.
 We aim to answer: *"Is there a continuous path connecting these two states, and what are the driver genes orchestrating this transition?"*
 
 ---
 
-## 🛠️ 2. Methodology (方法与修正)
+## 🛠️ 2. Methodology
 
 The analysis was performed using **Monocle3** with the following key steps:
 
@@ -182,23 +182,23 @@ The analysis was performed using **Monocle3** with the following key steps:
 
 ---
 
-## 🧬 3. Key Findings (核心发现)
+## 🧬 3. Key Findings
 
-### A. Confirmation of Lineage Plasticity (细胞可塑性验证)
+### A. Confirmation of Lineage Plasticity
 The trajectory analysis confirms a direct, continuous lineage relationship between AT2 cells and Krt8 ADI cells. The process is not discrete but shows a gradual transition, supporting the hypothesis of **AT2-to-ADI transdifferentiation**.
 
-### B. Pseudotime Gradient (拟时序梯度)
+### B. Pseudotime Gradient
 * **Early Phase:** Corresponds to naive AT2 cells (High expression of surfactant genes).
 * **Late Phase:** Corresponds to the Krt8 ADI state, characterized by the loss of AT2 identity and acquisition of a stress/injury phenotype.
 
-### C. Identification of the "ADI Module" (锁定关键基因团伙)
+### C. Identification of the "ADI Module"
 We successfully identified a specific gene module that is sharply upregulated at the trajectory terminus (ADI state).
 * **Key Markers identified:** `Krt8`, `Krt19`, `Lgals3`.
 * **Biological Implication:** This module represents the core transcriptional machinery driving the injury response and preventing re-differentiation (the "stalled" state).
 
 ---
 
-## 📊 4. Visual Evidence (结果图表)
+## 📊 4. Visual Evidence 
 
 | Plot Type | Filename | Description |
 | :--- | :--- | :--- |
@@ -219,12 +219,12 @@ We successfully identified a specific gene module that is sharply upregulated at
 **Input Data:** `Krt8_ADI_Module_Genes.csv` (The target gene list identified in Step 05)
 **Status:** ✅ Completed
 
-## 🎯 1. Objective (分析目标)
+## 🎯 1. Objective
 To decode the biological function of the "Krt8 ADI Module".
 We know *which* genes are in this module (e.g., *Krt8*, *Lgals3*), but we need to understand *what* cellular processes they orchestrate.
 * **Question:** Are these cells dying? Proliferating? Or differentiating?
 
-## 🛠️ 2. Methodology (方法)
+## 🛠️ 2. Methodology
 * **Tool:** `clusterProfiler` (R package).
 * **Database:** `org.Mm.eg.db` (Mouse Genome).
 * **Analysis Type:** Gene Ontology (GO) Enrichment - **Biological Process (BP)**.
@@ -233,20 +233,20 @@ We know *which* genes are in this module (e.g., *Krt8*, *Lgals3*), but we need t
     2.  Performed enrichment test (p-value cutoff < 0.05).
     3.  Visualized top 15 enriched terms using a **Dotplot**.
 
-## 🧬 3. Key Findings (核心发现)
+## 🧬 3. Key Findings
 The analysis reveals a distinct "Reprogramming & Repair" signature:
 
-1.  **Squamous Metaplasia (鳞状化生):**
+1.  **Squamous Metaplasia:**
     * **Top Terms:** `epidermis development`, `skin development`.
     * **Interpretation:** The lung AT2 cells are adopting "skin-like" properties (expression of Keratins). This is a classic stress response to thicken the alveolar barrier and protect against injury (forming a "callus").
-2.  **Barrier Reconstruction (屏障重建):**
+2.  **Barrier Reconstruction:**
     * **Top Terms:** `tight junction assembly`, `cell-cell junction organization`.
     * **Interpretation:** The cells are actively building connections to seal the injured alveoli and prevent leakage.
-3.  **Regenerative Potential (再生潜力):**
+3.  **Regenerative Potential :**
     * **Top Terms:** `lung morphogenesis`, `epithelial tube branching`.
     * **Interpretation:** Despite the injury phenotype, the cells retain the developmental memory required to regenerate lung structure.
 
-## 📊 4. Output Files (产出)
+## 📊 4. Output Files
 * 🖼️ **Visualization:** `Krt8_Module_GO_Enrichment.png` (The Dotplot).
 * 📋 **Full Table:** `Krt8_Module_GO_Table.csv` (Detailed statistics for all terms).
 
@@ -260,11 +260,11 @@ The analysis reveals a distinct "Reprogramming & Repair" signature:
 **Input Data:** `lung_monocle_final.rds`
 **Status:** ✅ Completed
 
-## 🎯 1. Objective (分析目标)
+## 🎯 1. Objective
 To visualize the dynamic expression changes of specific marker genes along the inferred trajectory.
 We aim to validate the identity switch from AT2 to ADI at the single-gene level: *"Do AT2 markers actually drop? Do ADI markers actually rise?"*
 
-## 🛠️ 2. Methodology (方法)
+## 🛠️ 2. Methodology
 * **Function:** `monocle3::plot_genes_in_pseudotime`.
 * **Target Genes Selected:**
     * **AT2 Lineage:** *Sftpc, Sftpb* (Surfactant proteins).
@@ -272,7 +272,7 @@ We aim to validate the identity switch from AT2 to ADI at the single-gene level:
     * **Proliferation:** *Mki67* (Cell cycle marker).
 * **Visualization:** Modeled expression trends (black lines) overlaid on single-cell expression values (colored dots).
 
-## 🧬 3. Key Findings (核心发现)
+## 🧬 3. Key Findings
 The kinetic plots reveal distinct expression patterns confirming the transdifferentiation model:
 
 1.  **Loss of AT2 Identity (Sftpc/Sftpb):**
@@ -288,7 +288,7 @@ The kinetic plots reveal distinct expression patterns confirming the transdiffer
     * **Trend:** Flat/Low expression throughout.
     * **Meaning:** Confirms the ADI state is a result of direct conversion (transdifferentiation) without active cell division (cell cycle arrest).
 
-## 📊 4. Output Files (产出)
+## 📊 4. Output Files
 * 🖼️ **Trend Plot:** `Monocle3_Gene_Trends_LinePlot.png` (Visualization of the 6 key genes).
 
 > **Conclusion:** The gene kinetics provide molecular evidence for the AT2-to-ADI transition, characterized by the synchronized downregulation of homeostatic genes and upregulation of stress-response genes.
@@ -302,11 +302,11 @@ The kinetic plots reveal distinct expression patterns confirming the transdiffer
 **Input Data:** `lung_obj_final_analysis.rds` (Seurat Object)
 **Status:** ✅ Completed
 
-## 🎯 1. Objective (分析目标)
+## 🎯 1. Objective
 To infer the intercellular communication network governing the lung injury response.
 We aim to move beyond single-cell identify (AT2 vs. ADI) and understand the **social network** of the tissue: *"Who is signaling to whom during the regeneration process?"*
 
-## 🛠️ 2. Methodology (方法)
+## 🛠️ 2. Methodology
 * **Tool:** `CellChat` (v1.x).
 * **Database:** `CellChatDB.mouse` (Full database).
 * **Process:**
@@ -314,13 +314,13 @@ We aim to move beyond single-cell identify (AT2 vs. ADI) and understand the **so
     2.  **Inference:** Computed communication probabilities using the `triMean` method.
     3.  **Aggregation:** Aggregated all L-R pairs to visualize the total communication flow.
 
-## 🧬 3. Key Findings (初步观察)
+## 🧬 3. Key Findings
 * **High Connectivity:** The global network reveals a dense, complex web of interactions (the "Hairball" phenotype), indicating robust cross-talk between Epithelial (AT2/ADI), Immune (Macrophages), and Stromal (Fibroblasts) compartments.
 * **Distinction:**
     * **Number Plot:** Shows potential connectivity bandwidth (how many pathways are available).
     * **Weight Plot:** Shows actual signaling intensity (how active these pathways are).
 
-## 📊 4. Output Files (产出)
+## 📊 4. Output Files
 * 💾 **CellChat Object:** `lung_cellchat.rds` (Saved for downstream analysis).
 * 🖼️ **Global Networks:**
     * `CellChat_Net_Number.png` (Interaction Frequency).
@@ -331,20 +331,20 @@ We aim to move beyond single-cell identify (AT2 vs. ADI) and understand the **so
 **Script:** `08_CellChat_Analysis.R` (Part 2)
 **Status:** ✅ Completed
 
-## 🎯 1. Objective (分析目标)
+## 🎯 1. Objective
 To decode the specific molecular signals driving the AT2-to-ADI transition.
 Instead of looking at the global network, we perform a directed analysis to answer two specific questions:
 1.  **Incoming:** What signals from the microenvironment are "bullying" AT2 cells?
 2.  **Outgoing:** What pathogenic signals are Krt8 ADI cells spreading to their neighbors?
 
-## 🛠️ 2. Methodology (方法)
+## 🛠️ 2. Methodology
 * **Visualization:** `netVisual_bubble` (Bubble Plots).
 * **Strategy:**
     * **Input Analysis:** Targets restricted to "AT2 cells".
     * **Output Analysis:** Sources restricted to "Krt8 ADI".
 * **Key Metrics:** Ligand-Receptor pairs plotted by communication probability (bubble size) and expression level (color).
 
-## 🧬 3. Key Findings (核心机制发现)
+## 🧬 3. Key Findings
 
 ### A. Environment Stress on AT2 (Incoming)
 * **Key Signal:** `Fn1 - Sdc4` (Fibronectin - Syndecan-4).
@@ -359,7 +359,7 @@ Instead of looking at the global network, we perform a directed analysis to answ
     * **SPP1** (Osteopontin): A known driver of fibrosis and inflammation.
     * **Conclusion:** ADI cells create a **pathogenic feed-forward loop**, preventing inflammation resolution.
 
-## 📊 4. Output Files (产出)
+## 📊 4. Output Files
 * 🖼️ `CellChat_Incoming_AT2.png`: Shows the fibrotic signals received by AT2.
 * 🖼️ `CellChat_Outgoing_ADI.png`: Shows the inflammatory signals sent by ADI.
 
