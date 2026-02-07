@@ -440,3 +440,43 @@ To quantify specific biological states (Senescence, EMT, Hypoxia) across cell ty
 * 🖼️ `Pathway_UCell_UMAP.png`: Visualizes the spatial restriction of these states.
 
 > **Conclusion:** The AT2-to-ADI transition is not just a change in markers (Krt8+), but a fundamental shift in cell state involving **metabolic reprogramming (Hypoxia)**, **cell cycle arrest (Senescence)**, and **fibrogenic activation (EMT)**.
+
+
+# 📅 2026-02-07 (Part 5): Metabolic Pathway Analysis (The "Switch")
+
+**Script:** `11_Metabolic_Analysis_UCell_Manual.R` (Plan B: Manual Gene Sets)
+**Status:** ✅ SUCCEEDED (Bypassed installation issues by using UCell directly)
+
+## 🎯 1. Objective
+To validate the hypothesis derived from the Hypoxia scores: *"Do ADI cells undergo metabolic reprogramming (switching from oxidative phosphorylation/lipid metabolism to glycolysis) to adapt to the injury environment?"*
+
+## 🛠️ 2. Methodology
+* **Strategy:** Due to `scMetabolism` installation failures (GitHub connectivity), we implemented a **manual UCell scoring approach**.
+* **Gene Sets (Curated from KEGG/Reactome):**
+    * **Glycolysis:** (Pgk1, Eno1, Ldha...) - Indicator of anaerobic respiration/Warburg effect.
+    * **Fatty Acid Metabolism:** (Fasn, Acaca...) - Indicator of Surfactant synthesis.
+    * **OxPhos / TCA:** Indicators of mitochondrial respiration.
+
+## 🧬 3. Key Findings
+
+### A. The "Metabolic Switch" (Major Discovery)
+* **Evidence:**
+* **Observation:**
+    * **Normal AT2 cells** are dominant in **Fatty Acid Metabolism**. This makes biological sense as they are "factories" for lipid-rich surfactant.
+    * **Krt8 ADI cells** show a dramatic **loss** of Fatty Acid Metabolism and a sharp **gain** in **Glycolysis**.
+* **Interpretation:** This confirms **Metabolic Reprogramming**. The ADI cells shift their energy source from lipids to glucose, likely to survive in the **Hypoxic** niche identified in the previous step.
+
+### B. Stress Adaptation
+* **Evidence:**
+* **Observation:** **Glutathione metabolism** is upregulated in ADI cells.
+* **Interpretation:** This suggests ADI cells are under high oxidative stress and are upregulating antioxidant pathways to prevent apoptosis.
+
+### C. Spatial Segregation
+* **Evidence:**
+* **Observation:** The Glycolysis-high population and Fatty Acid-high population are spatially distinct on the UMAP, with the transition zone (Activated AT2) showing intermediate levels.
+
+## 📊 4. Output Files
+* 🖼️ `Metabolism_DotPlot_Manual.png`: The summary of metabolic activities across cell types.
+* 🖼️ `Metabolism_UMAP_Comparison.png`: Visualizes the "Lipid-to-Sugar" switch on the single-cell map.
+
+> **Conclusion:** The analysis provides a metabolic mechanism for the ADI state. The transition involves a fundamental switch: **Lipid-Dependent (Homeostatic) ➡️ Glycolytic (Injury-Adapted)**. This aligns perfectly with the Hypoxia and HIF1a signatures found earlier.
