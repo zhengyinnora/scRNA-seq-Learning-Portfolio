@@ -366,3 +366,47 @@ Instead of looking at the global network, we perform a directed analysis to answ
 > **Summary:** The analysis identifies the **Fn1-Sdc4 axis** as a potential upstream trigger for AT2 injury, and the **Mif/Spp1 axis** as a downstream consequence of the ADI state.
 
 > **Next Step:** Perform "Sender/Receiver" analysis to specifically zoom in on signals received by AT2 cells (Input) and signals sent by Krt8 ADI cells (Output).
+
+
+# 📅 2026-02-07 (Part 3): Transcription Factor Analysis (The "Master Regulators")
+
+**Script:** `09_TF_Analysis_decoupleR.R` (Final AutoFix Version)
+**Status:** ✅ Completed (High Difficulty)
+
+## 🎯 1. Objective
+To move beyond gene expression and identify the **upstream Transcription Factors (TFs)** controlling the AT2-to-ADI transition. We aim to find the "bosses" (TFs) in the nucleus that are orchestrating the reprogramming process.
+
+## 🛠️ 2. Methodology
+* **Tool:** `decoupleR` (R package for footprint analysis).
+* **Algorithm:** `run_ulm` (Univariate Linear Model) for fast and robust inference.
+* **Database:** `DoRothEA` (High-confidence TF-Target interactome).
+* **Process:**
+    * Inferred TF activity scores based on the aggregate expression of downstream target genes.
+    * **Troubleshooting:** Overcame persistent "cell name mismatch" errors by implementing a robust renaming strategy (renaming all cells to `C1`, `C2`...) to ensure 100% matrix alignment.
+
+## 🧬 3. Key Findings
+
+### A. The Mastermind of Reprogramming
+* **Key TF:** **Sox9**.
+* **Observation:** Shows peak activity (deep red) specifically in `Krt8 ADI` cells, while silent in normal AT2 cells.
+* **Interpretation:** **Sox9** is confirmed as the master regulator forcing AT2 cells to lose their identity and acquire a progenitor-like state.
+
+### B. The Stress Signal (The Trigger)
+* **Key TFs:** **Atf6** and **Hsf1**.
+* **Observation:** Highly upregulated activity in the ADI population.
+* **Interpretation:** Markers of **ER Stress (Unfolded Protein Response)**. This suggests that proteotoxic stress is a primary driver or consequence of the transition.
+
+### C. The Fibrosis Architects (EMT)
+* **Key TF:** **Twist1**.
+* **Interpretation:** **Twist1** is a classic driver of Epithelial-Mesenchymal Transition (EMT). Its activation indicates AT2 cells are acquiring fibroblast-like properties, contributing to fibrosis.
+
+### D. The Inflammatory Thugs
+* **Key TFs:** **Junb**, **Fosl1** (AP-1 family).
+* **Interpretation:** Indicates a strong pro-inflammatory transcriptional program is active within the transitioning cells.
+
+## 📊 4. Output Files
+* 🖼️ `TF_Activity_Heatmap.png`: Heatmap visualizing the inferred activity of the top differential TFs across all cell types.
+
+> **Summary:** The analysis successfully identifies the **Sox9-Twist1-Atf6 axis** as the core regulatory network. Injury triggers **ER Stress (Atf6)**, which activates **Sox9** for reprogramming and **Twist1** for fibrosis.
+
+**Next Step:** Perform Pathway Activity Analysis (PROGENy/UCell) to score specific biological processes (e.g., Hypoxia, TGF-b signaling) across the trajectory.
