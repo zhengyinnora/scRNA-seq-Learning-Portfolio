@@ -480,3 +480,40 @@ To validate the hypothesis derived from the Hypoxia scores: *"Do ADI cells under
 * 🖼️ `Metabolism_UMAP_Comparison.png`: Visualizes the "Lipid-to-Sugar" switch on the single-cell map.
 
 > **Conclusion:** The analysis provides a metabolic mechanism for the ADI state. The transition involves a fundamental switch: **Lipid-Dependent (Homeostatic) ➡️ Glycolytic (Injury-Adapted)**. This aligns perfectly with the Hypoxia and HIF1a signatures found earlier.
+
+
+# 📅 2026-02-17 (Part 6): NicheNet Ligand-Target Inference
+
+**Script:** `13_NicheNet_Analysis_Final_Fix.R`
+**Status:** ✅ SUCCEEDED (Mouse-to-Human mapping implemented)
+
+## 🎯 1. Objective
+To bridge the gap between extracellular signals (CellChat) and intracellular responses (TF/DEG).
+* **Question:** We know Fibroblasts signal to AT2 cells (via Fn1 etc.), but *which* specific ligands drive the transcriptomic changes seen in Krt8 ADI cells?
+
+## 🛠️ 2. Methodology
+* **Tool:** `NicheNet` (v2.0).
+* **Strategy:**
+    * **Sender:** Fibroblasts / Myofibroblasts.
+    * **Receiver:** Krt8 ADI.
+    * **Genes of Interest:** Upregulated genes in Krt8 ADI vs AT2 (translated to Human symbols for database compatibility).
+* **Optimization:** Used pre-trained ligand-target matrices to infer regulatory potential based on prior knowledge networks.
+
+## 🧬 3. Key Findings
+
+### A. The "Fibrotic Cocktail" (Ligands Identified)
+The analysis successfully prioritized a set of pathogenic ligands secreted by fibroblasts:
+* **SPP1 (Osteopontin):** The strongest driver. Known to promote both fibrosis and immune cell infiltration.
+* **ECM Components:** **FN1** (Fibronectin), **TNC** (Tenascin-C), **LAMB1** (Laminin), **THBS1** (Thrombospondin).
+* **Validation:** The identification of **FN1** independently validates our previous CellChat results, confirming that ECM stiffening is a primary input signal.
+
+### B. The Mechanism of Action (Ligand-Target Links)
+* **The SPP1 -> ICAM1 Axis:**
+    * The heatmap reveals a strong regulatory link between fibroblast-derived **SPP1** and ADI-expressed **ICAM1**.
+    * **Biological Implication:** This suggests a mechanism where the fibrotic niche (SPP1) forces epithelial cells to acquire an **adhesive/inflammatory phenotype (ICAM1)**, likely to recruit macrophages, thereby perpetuating the inflammatory loop.
+
+## 📊 4. Output Files
+* 🖼️ `NicheNet_Ligand_Activity.png`: Ranking of top fibroblast ligands.
+* 🖼️ `NicheNet_Ligand_Target_Heatmap.png`: Visualizes the specific regulation of ADI targets (ICAM1, CALM1) by these ligands.
+
+> **Conclusion:** The transition to the ADI state is not cell-autonomous. It is actively driven by a fibroblast-derived **ECM-inflammatory program** (dominated by SPP1 and FN1), which forces AT2 cells to adopt an ICAM1+ stress state.
