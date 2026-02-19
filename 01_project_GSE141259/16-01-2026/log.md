@@ -511,3 +511,45 @@ To bridge the gap between intercellular communication (CellChat) and intracellul
 * **Interpretation:** *ICAM1* is a hallmark of cellular senescence and the SASP phenotype. This proves that the pathogenic state of ADI cells is actively maintained by external microenvironmental cues, locking them into an inflammatory, non-regenerative state.
 
 > **Conclusion:** The transition to the ADI state is externally enforced. The Fibroblast-derived **SPP1/THBS1 ➡️ ICAM1 axis** provides a direct mechanistic link between matrix stiffening, cellular senescence, and chronic inflammation in the lung.
+
+# 📅 2026-02-19: Clinical Validation - Part 1 (The PBMC Anomaly)
+
+**Script:** `14_Survival_Analysis.R`
+**Data Source:** `GSE28042` (Human IPF Peripheral Blood Mononuclear Cells - PBMC)
+**Status:** ✅ Completed (Unexpected Result)
+
+## 🎯 1. Objective
+To test if the `Krt8 ADI` gene signature (derived from mouse lung tissue) holds prognostic value in the systemic circulation (blood) of human IPF patients.
+
+## 🛠️ 2. Methodology
+* Extracted the 6-gene ADI signature (`KRT8, SOX9, ATF6, TWIST1, SPP1, ICAM1`).
+* Scored 75 IPF patients based on their PBMC microarray data.
+* Plotted Kaplan-Meier survival curves.
+
+## 🧬 3. Key Findings & The "Plot Twist"
+* **Result:** The analysis yielded a highly significant p-value (p = 0.00036). However, the direction was inverted: **Patients with a HIGH ADI score in their blood had significantly LONGER survival times.**
+* **Interpretation (Tissue vs. Systemic Paradox):** This biological curveball highlights tissue-specificity. While these genes drive fibrosis locally in the lung, their depletion in the peripheral blood may indicate severe immune exhaustion or systemic failure. 
+* **Next Step:** To validate the direct pathogenic role of ADI cells, we must switch the clinical dataset from blood (systemic) to lung tissue/BAL (local microenvironment).
+
+---
+
+# 📅 2026-02-19: Clinical Validation - Part 2 (Metadata Diagnostics)
+
+**Script:** `14c_Diagnostic.R`
+**Data Source:** `GSE70866` (Human IPF BAL Fluid)
+**Status:** 🛠️ Troubleshooting Completed
+
+## 🎯 1. Objective
+To debug the `Column 'Gene' is not found` and `0 patients extracted` errors encountered when initially processing the lung BAL dataset.
+
+## 🛠️ 2. Methodology
+* Rather than relying on standard regex matching for clinical columns (which failed), a diagnostic script was written to directly fetch and print the raw `pData` column names and the first patient's metadata from the GEO object.
+
+## 🔍 3. Key Discoveries (The "GEO Formatting" Trap)
+* **Finding:** The errors were caused by highly idiosyncratic and non-standard metadata naming by the original authors. 
+* **Exact Column Names Exposed:**
+    * Survival Status was named: `"survival status, 0 = censored, 1 = death:ch1"`
+    * Survival Time was named: `"time to death (days):ch1"`
+* **Resolution:** This detective work allowed us to rewrite the analysis script (`14b_Sniper`) to explicitly target these exact string names and convert the time unit from days to months, bypassing the automated extraction failure.
+
+---
