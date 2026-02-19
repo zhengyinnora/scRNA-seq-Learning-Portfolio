@@ -133,32 +133,42 @@ message("🎉 大功告成！快去看图！")
 
 
 # ==============================================================================
-# 📊 Figure Interpretation: NicheNet_Ligand_Target_Heatmap.png (图解指南)
+# 📊 Figure Interpretation: NicheNet Ligand-Target Analysis (图解指南)
 # ==============================================================================
 
-# 1. The "Bullies" (Prioritized Ligands - Y Axis / 纵轴):
-#    - These are the proteins secreted by Fibroblasts that have the highest probability 
-#      of affecting the ADI state.
-#    - **SPP1 (Osteopontin):** The top-ranked ligand (Deep Purple). A master regulator of fibrosis 
-#      and inflammation. Its presence confirms a pro-fibrotic niche.
-#    - **FN1 (Fibronectin) & TNC (Tenascin-C):** ECM components. Confirms the "Stiffening" hypothesis 
-#      derived from CellChat. Fibroblasts are physically remodeling the niche.
-#    - **THBS1 (Thrombospondin-1):** A known activator of TGF-beta signaling, driving EMT.
+# ------------------------------------------------------------------------------
+# Figure 1: NicheNet_Ligand_Activity.png (Top Predicted Ligands)
+# Focus: What is the Fibroblast niche secreting? (成纤维细胞在分泌什么？)
+# ------------------------------------------------------------------------------
 
-# 2. The "Victims" (Target Genes - X Axis / 横轴):
-#    - These are the genes in Krt8 ADI cells that are upregulated *specifically* in response to these ligands.
-#    - **ICAM1 (Intercellular Adhesion Molecule 1):** #      - Strongly regulated by SPP1 (See the dark purple intersection).
-#      - Biological Meaning: Fibroblasts are forcing ADI cells to express adhesion molecules, 
-#        making them "sticky" to recruit leukocytes (inflammation).
-#    - **CALM1 (Calmodulin 1):**
-#      - Regulated by LAMB1/THBS1.
-#      - Biological Meaning: Involved in calcium signaling and stress response.
+# 1. The TGF-beta Activator (纤维化主开关):
+#    - [Observation]: THBS1 (Thrombospondin 1) is the top-ranked predicted ligand.
+#    - [Meaning]: THBS1 is a major endogenous activator of latent TGF-beta. 
+#      Fibroblasts are actively establishing a highly pro-fibrotic signaling environment.
+#    - [中文]: THBS1 高居榜首。它是 TGF-β（纤维化核心因子）的强效激活剂，说明成纤维细胞正在主动制造纤维化风暴。
 
-# 3. Conclusion (Storyline):
-#    "NicheNet analysis identifies a specific 'Fibrotic-Inflammatory Axis'. 
-#     Fibroblasts secrete SPP1 and ECM factors (FN1, TNC), which directly drive 
-#     the upregulation of ICAM1 in ADI cells, promoting immune cell recruitment and 
-#     tissue remodeling."
-#    (成纤维细胞通过分泌 SPP1 和 FN1/TNC 等基质蛋白，直接诱导 ADI 细胞表达 ICAM1。
-#     这解释了 ADI 细胞为何会获得“促炎”属性——是被微环境诱导的。)
+# 2. Extracellular Matrix Remodeling (基质重塑/僵硬化):
+#    - [Observation]: Enrichment of structural ECM proteins (COL4A1, LAMB1, FBN1, FN1).
+#    - [Meaning]: Validates the CellChat findings. The ADI cells are trapped in a stiff, 
+#      pathological extracellular matrix, which likely acts as a mechanical stressor driving their reprogramming.
+
+# ------------------------------------------------------------------------------
+# Figure 2: NicheNet_Ligand_Target_Heatmap.png (Regulatory Potential)
+# Focus: What do these ligands DO to the ADI cells? (这些配体导致了什么后果？)
+# ------------------------------------------------------------------------------
+
+# 1. The SPP1-ICAM1 Axis (炎症与衰老的纽带):
+#    - [Observation]: Strong regulatory potential between Fibroblast-derived SPP1 (and LAMB1/THBS1) 
+#      and the target gene ICAM1 in ADI cells.
+#    - [Meaning]: ICAM1 is a critical adhesion molecule and a well-known marker of 
+#      cellular senescence and the SASP (Senescence-Associated Secretory Phenotype).
+#    - [Conclusion]: Signals from the fibrotic niche directly instruct ADI cells to adopt 
+#      a pro-inflammatory, senescent phenotype (upregulating ICAM1), preventing their normal regeneration.
+#    - [中文]: 这是一个关键发现。成纤维细胞的配体直接驱动了 ADI 细胞中 ICAM1 的表达。ICAM1 是经典的衰老/促炎标志物，这意味着微环境直接“锁死”了 ADI 的病理状态，迫使它们成为炎症推手。
+
+# ==============================================================================
+# 📝 Summary for Manuscript (论文结论):
+# "NicheNet analysis reveals that the fibrotic niche (Fibroblasts) drives the ADI state 
+#  through the secretion of ECM components (THBS1, LAMB1) and SPP1, which subsequently 
+#  upregulate the senescence and adhesion marker ICAM1 on transitioning epithelial cells."
 # ==============================================================================
