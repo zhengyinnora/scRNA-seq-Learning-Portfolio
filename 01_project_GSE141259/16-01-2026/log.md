@@ -655,35 +655,57 @@ To translate our bioinformatic findings into actionable clinical hypotheses. We 
 **Next Step:** Proceed to RNA Velocity (RNA速率预处理) or Spatial Transcriptomics mapping to further validate the spatiotemporal dynamics of these targets.
 
 
-### 🗓️ 2026-03-03 (Part 6): Clinical Validation & Machine Learning
+### 🗓️ 2026-03-03 (Part 3): Drug Repurposing & Interaction Network
 
-Scripts: `18_GEO_Data_Prep.R`, `19_Machine_Learning_Signatures.R`  
-Status: ✅ SUCCEEDED (High Complexity / Metadata Recovery)
+Scripts: `17_Drug_Repurposing.R`, `17b_Drug_Network_Plot.R`  
+Status: ✅ SUCCEEDED (Bypassed Deprecated Packages)
 
 🎯 **1. Objective**
 
-To validate the clinical relevance of our 200 cross-species conserved targets and identify a parsimonious "Diagnostic Gene Panel" capable of identifying IPF patients in large-scale human cohorts.
+To translate conserved pathogenic signatures into actionable therapeutic hypotheses by identifying drugs capable of inhibiting the core drivers of IPF.
 
 🛠️ **2. Methodology**
 
-* **Dataset:** GSE32537 (Human Lung Tissue - Microarray).
-* **Preprocessing:** * Performed probe-to-symbol ID mapping and filtered for the 200 conserved targets.
-    * **Troubleshooting (Critical):** Encountered a metadata labeling failure where samples were initially masked as 100% "Control". Resolved this by implementing a **"Global Metadata Scanning"** algorithm to extract diagnosis labels from hidden characteristic columns (identifying 167 IPF vs. 50 Controls).
-* **Algorithms:** * **LASSO Regression:** Applied for feature shrinkage to eliminate multi-collinearity and noise.
-    * **Random Forest:** Used for final model construction and feature importance ranking (MeanDecreaseGini).
-* **Validation:** ROC curve analysis to assess diagnostic sensitivity and specificity.
+* **Database:** Drug-Gene Interaction Database (DGIdb, 2026 Latest version).
+* **Process:** * **Troubleshooting (Package Deprecation):** The `rDGIdb` package is unavailable for Bioconductor 3.22. I developed a custom pipeline to directly fetch and parse the raw `interactions.tsv` from DGIdb servers.
+    * **Data Cleaning:** Filtered for high-confidence interactions and prioritized "inhibitors" and "neutralizing antibodies." Removed uncharacterized experimental compounds (e.g., [PMID...]) to ensure clinical relevance.
+* **Visualization:** Built a bipartite network using `igraph` and `ggraph` (Force-directed 'FR' layout).
 
 🧬 **3. Key Findings**
 
-* **Model Performance:** The final diagnostic model achieved an **AUC of 0.871**, indicating high accuracy and clinical translation potential. 
-* **Top Biomarkers:** * **ACTA2:** Confirmed as the top-ranking diagnostic feature, consistent with myofibroblast activation.
-    * **GPX3 & GPX2:** Identified as key oxidative stress mediators in the clinical phenotype.
-    * **CXCL10 & CCL2:** Validated as conserved inflammatory drivers bridging mouse injury and human fibrosis.
+* **High-Value Targets:** Identified `C3`, `CTSV`, and `CXCL10` as actionable nodes.
+* **Repurposing Candidates:** * **AMY-101:** A potent inhibitor for the complement hub `C3`.
+    * **DEFACTINIB:** A FAK inhibitor targeting the fibrosis-related `CTSV` node.
+* **Network Topology:** The visualization revealed both "Hub Targets" (targeted by multiple drugs) and "Precision Pairs" (specific drug-gene interactions). 
 
-📊 **4. Output Files**
+---
 
-* 🖼️ `19_Machine_Learning_ROC.pdf`: ROC curve showing the diagnostic power of the conserved signature.
-* 🖼️ `19_Feature_Importance.pdf`: Variable importance plot ranking the top clinical biomarkers.
-* 📄 `19_Final_Diagnostic_Panel.csv`: The finalized list of priority genes for downstream clinical screening.
+### 🗓️ 2026-03-03 (Part 4): Clinical Validation & Machine Learning
 
-> **Summary:** We successfully translated single-cell findings into a high-performance clinical diagnostic model. The 87.1% accuracy in an independent cohort proves that our cross-species targets are not just experimental artifacts but represent the core molecular machinery of human IPF.
+Scripts: `18_GEO_Data_Prep.R`, `19_Machine_Learning_Signatures.R`  
+Status: ✅ SUCCEEDED (Metadata Recovery & Model Optimization)
+
+🎯 **1. Objective**
+
+To validate the clinical significance of our conserved targets and compress them into a parsimonious "Diagnostic Gene Panel" for human IPF screening.
+
+🛠️ **2. Methodology**
+
+* **Dataset:** GSE32537 (Human Lung Tissue Microarray, n=217).
+* **Process:** * **Troubleshooting (Metadata Labeling):** Encountered a "hidden label" issue where samples lacked explicit "IPF/Control" headers. Implemented a **"Global Metadata Scanning"** algorithm to reconstruct groups from deep characteristic strings (167 IPF vs. 50 Controls).
+    * **Model Training:** Employed a dual-machine learning approach: **LASSO Regression** for feature shrinkage, followed by **Random Forest** for final classification and importance ranking.
+* **Validation:** Evaluated model performance via ROC (Receiver Operating Characteristic) curve analysis.
+
+🧬 **3. Key Findings**
+
+* **Model Performance:** The final diagnostic signature achieved an **AUC of 0.871**, demonstrating exceptional accuracy in human clinical cohorts. 
+* **Top Biomarkers:** `ACTA2`, `GPX3`, and `CCL2` were identified as the most influential diagnostic features (Highest MeanDecreaseGini).
+* **Biological Consistency:** The biomarkers identified by AI perfectly match the conserved pathogenic genes found in our humanized mouse scRNA-seq atlas.
+
+📊 **4. Final Outputs of the Day**
+
+* 🖼️ `17b_Drug_Target_Network.pdf`: Visual map of drug-target interactions.
+* 🖼️ `19_Machine_Learning_ROC.pdf`: High-confidence clinical validation plot (AUC 0.871).
+* 📄 `19_Final_Diagnostic_Panel.csv`: Priority list of genes for future clinical kits.
+
+> **Summary:** Today's workflow established a complete translational pipeline: starting from **cross-species discovery** (Step 16), moving to **therapeutic matching** (Step 17), and culminating in **clinical diagnostic validation** (Step 19).
