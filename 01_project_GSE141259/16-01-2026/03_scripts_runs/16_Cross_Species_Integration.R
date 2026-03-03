@@ -56,6 +56,29 @@ ggsave("lianxi/04_output_plots/Cross_Species_Pathogenic_Markers.png", p2, width 
 
 message("🎉 融合完毕！快去看图！")
 
+# ==============================================================================
+# 补充步骤：7. 聚类、提取特征基因并保存结果
+# ==============================================================================
+
+# 先对融合后的细胞进行聚类 (基于 harmony 降维)
+message("🧬 正在进行细胞聚类...")
+merged_obj <- FindNeighbors(merged_obj, reduction = "harmony", dims = 1:30)
+merged_obj <- FindClusters(merged_obj, resolution = 0.5)
+
+# 保存这个好不容易跑完的融合对象，下次就不用从头跑 Harmony 了
+message("💾 正在保存融合后的完整对象...")
+saveRDS(merged_obj, "lianxi/04_output_plots/Cross_Species_Integrated_Final.rds")
+
+# 提取特征基因 (为了拿到能用于药物重定向的靶点)
+message("🔍 正在计算特征基因并生成 CSV (这步可能需要几分钟，请耐心等待)...")
+# 找出表达量显著上调的基因
+conserved_markers <- FindAllMarkers(merged_obj, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+# 终于！把基因列表保存为我们第 17 步需要的 CSV 文件
+write.csv(conserved_markers, "lianxi/04_output_plots/16_conserved_markers.csv", row.names = FALSE)
+
+message("✅ 大功告成！CSV 文件已成功保存在 lianxi/04_output_plots/ 文件夹下！")
+
 
 # ==============================================================================
 # 📊 Figure Interpretation: Cross-Species Integration Proof-of-Concept (图解指南)
@@ -102,4 +125,5 @@ message("🎉 融合完毕！快去看图！")
 # matrix. Harmony will detect the true global transcriptomic overlaps, causing the purple 
 # pathogenic cells from both species to physically co-localize into a single, unified 
 # cluster on the UMAP, delivering the ultimate proof of translational relevance.
+
 # ==============================================================================
