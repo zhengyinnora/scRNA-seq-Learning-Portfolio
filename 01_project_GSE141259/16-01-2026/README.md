@@ -17,3 +17,34 @@ Through differential expression analysis (Seurat workflow), we confirmed that Kr
 
 ---
 *Analysis performed by Nora using R/Seurat.*
+
+
+# 🫁 IPF-Translational-Pipeline: From Single-Cell to Spatial Diagnostics
+
+An end-to-end bioinformatics pipeline for Idiopathic Pulmonary Fibrosis (IPF), bridging cross-species single-cell RNA-seq discovery, drug repurposing, machine learning clinical validation, and spatial transcriptomics mapping.
+
+## 🌟 Project Highlights
+* **Cross-Species Integration:** Harmonized human and mouse scRNA-seq data to identify conserved pathogenic cell states (e.g., ADI cells).
+* **Drug Repurposing Network:** Extracted target interactions bypassing deprecated packages to construct a customized bipartite network (identifying inhibitors like AMY-101).
+* **AI Clinical Diagnostics:** Deployed LASSO and Random Forest to compress 200+ targets into a high-precision diagnostic panel achieving an **AUC of 0.871** on an independent clinical cohort (GSE32537).
+* **Spatial Niche Mapping:** Engineered a computational simulation framework to map core biomarkers (e.g., ACTA2) and cell types onto 2D tissue coordinates, overcoming Seurat v5 layer fragmentation.
+
+## 🛠️ Pipeline Structure (20-Step Workflow)
+The analysis is divided into sequential R scripts, ensuring reproducibility from raw matrices to final publication-ready figures:
+
+* `01` to `15`: Quality Control, Normalization, Clustering, and Trajectory Inference.
+* `16_Cross_Species_Integration.R`: Human-Mouse multi-omics anchoring.
+* `17_Drug_Repurposing.R`: Targeted therapeutic screening.
+* `18_GEO_Data_Prep.R`: Automated clinical metadata recovery and matrix transformation.
+* `19_Machine_Learning_Signatures.R`: Diagnostic model training (LASSO + RF).
+* `20_Spatial_Mapping_Simulation.R`: Spatial transcriptomics deconvolution and visualization.
+
+## 📊 Key Results
+*(Note: You can insert your generated plots here later, like the ROC curve or Spatial Mapping plot)*
+1. Core Diagnostic Panel: `ACTA2`, `GPX3`, `CXCL10`.
+2. Model Performance: AUC 0.871 (Validated in GSE32537 cohort).
+3. Drug Candidates: Successfully mapped inhibitors to fibrotic hubs.
+
+## 💻 Tech Stack
+* **Language:** R (Version 4.5.1)
+* **Core Libraries:** `Seurat v5`, `glmnet` (LASSO), `randomForest`, `pROC`, `igraph`.
