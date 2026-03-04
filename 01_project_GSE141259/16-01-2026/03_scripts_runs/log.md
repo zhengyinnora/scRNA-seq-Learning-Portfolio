@@ -766,3 +766,26 @@ To elevate the analysis from "correlational biomarkers" to "causal drivers." The
 * 🖼️ `21_MR_Scatter_Plot.png`: High-resolution scatter plot visualizing the causal inference analysis.
 
 > **🏆 Pipeline Grand Finale:** > With the successful integration of the MR framework, this repository now represents a complete, industry-standard Computational Biology pipeline. It seamlessly connects scRNA-seq clustering, cross-species translation, machine-learning clinical diagnostics, spatial mapping, and genetic causal inference.
+
+
+### 🗓️ 2026-03-04 (Part 5b): The Reality Check - Genetic Bottlenecks in Target Discovery
+
+Script: `21b_Real_Target_MR.R`  
+Status: ⚠️ LOGIC PASSED / DATA GAP IDENTIFIED
+
+🎯 **1. Objective**
+To perform high-throughput Mendelian Randomization (MR) screening on scRNA-seq derived candidates (`ACTA2`, `GPX3`, `CCL2`, `CXCL10`) against large-scale IPF GWAS cohorts.
+
+🛠️ **2. Challenges Encountered**
+* **The "Zero-Overlap" Problem:** While the API correctly retrieved genetic instruments (eQTLs) for all targets, zero SNPs matched the IPF outcome databases.
+* **Interpretation:** This is a classic "Coverage Gap" in drug discovery. Current GWAS chips (Outcome) often fail to capture the specific regulatory variants (Exposure) associated with highly specific cell-state markers identified via single-cell sequencing.
+
+💡 **3. Engineering Takeaway**
+* **Negative Results are Results:** In an industry setting, identifying that a target cannot be genetically validated with current datasets is a critical "Go/No-Go" decision point. It saves downstream R&D costs.
+* **Framework Robustness:** The pipeline successfully implemented:
+    * **Automated Batch Processing:** Looping through multiple targets.
+    * **Error Handling:** Using `tryCatch` and "Safety Locks" to prevent script crashes during data gaps.
+    * **Positive Control Validation:** Confirmed that the infrastructure works perfectly via the LDL-CHD test case.
+
+🚀 **4. Next Steps in Methodology**
+To bridge this gap, the pipeline needs to expand into **Gene Regulatory Networks (GRN)** to find the "Master Regulators" (Transcription Factors) that might have broader and more robust genetic signals than individual downstream effector genes.
