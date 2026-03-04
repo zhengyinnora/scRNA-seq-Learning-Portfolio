@@ -814,3 +814,23 @@ To transition from purely descriptive marker identification to mechanistic under
 
 ### 🚀 4. Final Conclusion
 The methodology pipeline is now closed. We have successfully moved from raw FASTQ data to a prioritized list of Mechanistic Master Regulators.
+
+
+## 🗓️ 2026-03-04 (Part 6b): The Numerical Stability Victory & Global Mapping
+
+**Result File:** `22_TF_Activity_Global_Heatmap_FINAL.pdf`  
+**Status:** 🏆 MILESTONE REACHED
+
+### 🎯 1. Objective
+To visualize the tissue-wide transcription factor (TF) regulatory landscape and identify the specific "command center" of the Krt8+ ADI population.
+
+### 🛠️ 2. Critical Breakthroughs
+* **Numerical Sanitization:** Resolved the "Exponentiation yielded infinite values" crisis by implementing a direct `rowMeans` aggregation on the TF-activity matrix, bypassing Seurat's V5 exponential-scaling defaults.
+* **Hierarchical Insight:** Hierarchical clustering (Euclidean distance) confirmed the ontogenic proximity between **Krt8+ ADI** and **Activated AT2** cells, providing mechanistic support for the intermediate state hypothesis.
+
+### 🧬 3. Biological Signatures Identified
+* **Pro-fibrotic Hubs:** Identified high activity of **CTNNB1**, **GLI1**, and **MBD2** in transitional epithelial states.
+* **Immune Modulators:** Mapped **STAT5A** and **NFKB** signatures to recruited macrophage populations within the fibrotic niche.
+
+### 🚀 4. Final Assessment
+The pipeline has successfully transitioned from descriptive transcriptomics to mechanistic regulatory inference. The project is now ready for **Step 23: Target Prioritization and In Silico Knockout Validation.**
