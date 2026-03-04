@@ -789,3 +789,28 @@ To perform high-throughput Mendelian Randomization (MR) screening on scRNA-seq d
 
 🚀 **4. Next Steps in Methodology**
 To bridge this gap, the pipeline needs to expand into **Gene Regulatory Networks (GRN)** to find the "Master Regulators" (Transcription Factors) that might have broader and more robust genetic signals than individual downstream effector genes.
+
+
+## 🗓️ 2026-03-04 (Part 6): Cracking the Regulatory Code - TF Activity Mapping
+
+**Script:** `22_TF_Activity_Inference.R`  
+**Status:** ✅ SUCCESS (Milestone Achieved)
+
+### 🎯 1. Objective
+To transition from purely descriptive marker identification to mechanistic understanding by inferring the activity of upstream Transcription Factors (TFs) that drive the fibrotic cell states (specifically the Krt8+ ADI transition).
+
+### 🛠️ 2. Critical Challenges & Engineering Solutions
+* **The "Nomenclature Crisis":** Multi-species integration introduced prefixes (e.g., `mm10---` or `human-`) that invalidated database matching. 
+    * *Solution:* Implemented a radical "Prefix-Stripping" regex to standardize features to pure Human Symbols.
+* **Statistical Collinearity:** High-sensitivity models (MLM) failed due to sparse data overlap. 
+    * *Solution:* Reverted to a robust Weighted Mean (WMean) model to ensure 100% computational stability across 29,297 cells.
+* **Visualization Noise:** Cluster density caused X-axis overcrowding.
+    * *Solution:* Applied horizontal-to-vertical text transformation and cluster filtering (>15 cells) for publication-quality output.
+
+### 🧬 3. Key Findings
+* **EGR1** identified as the primary driver for **Krt8+ ADI** cells.
+* **SMAD3/SOX4** confirmed as central hubs for fibrotic niche maintenance.
+* Regulatory landscape mapped across **704 verified TFs**, providing a wealth of candidates for future *in vitro* validation.
+
+### 🚀 4. Final Conclusion
+The methodology pipeline is now closed. We have successfully moved from raw FASTQ data to a prioritized list of Mechanistic Master Regulators.
