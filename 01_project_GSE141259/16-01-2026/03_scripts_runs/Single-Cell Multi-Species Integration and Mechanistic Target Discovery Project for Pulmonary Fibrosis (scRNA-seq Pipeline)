@@ -1,0 +1,61 @@
+# 🧬 肺纤维化单细胞多物种整合与机制靶点发现项目
+# Single-Cell Multi-Species Integration and Mechanistic Target Discovery Project for Pulmonary Fibrosis (scRNA-seq Pipeline)
+
+**项目状态 / Project Status：** 🟢 完结 / Completed  
+**分析核心 / Core Focus：** 探索肺泡上皮细胞向纤维化过渡的致病中间态（Krt8+ ADI）及其上游转录调控机制。 / To explore the pathogenic intermediate state (Krt8+ ADI) during the alveolar epithelial-to-fibrotic transition and its upstream transcriptional regulatory mechanisms.
+
+---
+
+## 📑 1. 项目执行摘要 / Executive Summary
+本项目包含 **23个标准化生物信息学分析步骤**。我们成功整合了约 29,297 个细胞的跨物种（Human-Mouse）单细胞转录组数据。项目从基础的数据清洗、降维聚类出发，一路推进至细胞通讯、发育轨迹推断、转录因子（TF）活性推断，并最终在数字世界（*In Silico*）完成了针对潜在治疗靶点的虚拟敲除（Virtual Knockout）验证。本项目确立了 **EGR1** 与 **SMAD3** 作为逆转肺纤维化进程的强效潜在药物干预靶点。
+
+This project comprises **23 standardized bioinformatics analysis steps**. We successfully integrated cross-species (Human-Mouse) single-cell transcriptome data of approximately 29,297 cells. The project advanced from basic data cleaning and dimensional reduction/clustering to cell-cell communication, developmental trajectory inference, transcription factor (TF) activity inference, and ultimately completed *in silico* virtual knockout validation for potential therapeutic targets. This project established **EGR1** and **SMAD3** as highly potent potential pharmacological intervention targets for reversing the pulmonary fibrosis progression.
+
+---
+
+## 🗺️ 2. 核心分析流程里程碑 / Pipeline Milestones
+
+### 🟢 阶段一：数据基建与跨物种整合 / Phase 1: Data Infrastructure & Cross-Species Integration (Steps 1 - 16)
+* **质控与清洗 / QC & Cleaning：** 严格过滤低质量细胞、双细胞（Doublets）及线粒体基因超标细胞。 / Strictly filtered low-quality cells, doublets, and cells with excessive mitochondrial gene expression.
+* **基因名重映射 / Nomenclature Harmonization：** 解决了人鼠同源基因名不一致的技术壁垒，建立统一的 Feature 空间。 / Resolved the technical barrier of inconsistent human-mouse homologous gene nomenclature, establishing a unified feature space.
+* **批次效应去除 / Batch Effect Removal：** 采用 Harmony 等算法，完美消除了物种间和实验批次间的技术噪音，实现了数据的深度融合。 / Applied algorithms like Harmony to perfectly eliminate technical noise between species and experimental batches, achieving deep data integration.
+
+### 🔵 阶段二：高分辨率细胞图谱与轨迹推断 / Phase 2: High-Resolution Cell Atlas & Trajectory Inference (Steps 17 - 18)
+* **精细化注释 / Granular Annotation：** 鉴定出涵盖上皮、间质、免疫及内皮系统的 40+ 个精细亚群。 / Identified 40+ granular subpopulations spanning epithelial, mesenchymal, immune, and endothelial systems.
+* **致病中间态锁定 / Pathogenic Intermediate State Identification：** 精准捕获了伴随纤维化发生的上皮细胞过渡态 (Krt8+ ADI)。 / Accurately captured the epithelial transitional state (Krt8+ ADI) that accompanies fibrogenesis.
+* **拟时间分析 / Pseudotime Analysis：** 重构了从健康 AT2 细胞 ➔ Krt8+ ADI ➔ 间充质/纤维化表型的病理演化轨迹。 / Reconstructed the pathological evolution trajectory from healthy AT2 cells ➔ Krt8+ ADI ➔ mesenchymal/fibrotic phenotypes.
+
+### 🟡 阶段三：微环境通讯与驱动基因挖掘 / Phase 3: Microenvironmental Communication & Driver Gene Mining (Steps 19 - 21)
+* **细胞通讯 / Cell Communication (CellChat)：** 解析了致病微环境中 ADI 细胞与巨噬细胞、成纤维细胞间的异常配受体互作（如 TGF-β, WNT 信号轴）。 / Decoded aberrant ligand-receptor interactions (e.g., TGF-β, WNT signaling axes) between ADI cells, macrophages, and fibroblasts within the pathogenic microenvironment.
+* **标志物与因果推断 / Markers & Causal Inference：** 结合差异表达分析与孟德尔随机化（MR）思想，筛选出具有潜在遗传学因果关系的致病基因集。 / Combined differential expression analysis with Mendelian Randomization (MR) concepts to screen for pathogenic gene sets with potential genetic causal relationships.
+
+### 🔴 阶段四：机制破译与靶点敲除验证 / Phase 4: Mechanistic Decoding & Target Knockout Validation (Steps 22 - 23)
+* **TF 活性推断 / TF Activity Inference (DecoupleR & CollecTRI)：** * 克服了极值溢出与稀疏矩阵共线性的技术难关。构建了包含 704 个转录因子的“全局调控热图 (Global Heatmap)”，成功刻画了 Krt8+ ADI 的专属调控网络。 / Overcame technical challenges of extreme value overflow and sparse matrix collinearity. Constructed a "Global Regulatory Heatmap" comprising 704 transcription factors, successfully mapping the exclusive regulatory network of Krt8+ ADI.
+* **数字虚拟敲除 / *In Silico* Perturbation：**
+  * **SMAD3 敲除模拟 / SMAD3 Knockout Simulation：** 靶向阻断 SMAD3 下游 70% 调控信号，导致 ADI 细胞致病评分呈现“断崖式下跌”。 / Targeted blockade of 70% of SMAD3's downstream regulatory signals resulted in a "cliff-like drop" in the pathogenic score of ADI cells.
+  * **EGR1 敲除模拟 / EGR1 Knockout Simulation：** 验证了 EGR1 作为极早期应激启动因子的关键地位，敲除后病理状态的中位数被彻底清零，展现出极佳的早期干预潜力。 / Validated EGR1's critical role as an ultra-early stress initiator; post-knockout, the median pathological state was completely cleared, demonstrating excellent potential for early intervention.
+
+---
+
+## 💡 3. 核心科学发现 / Key Biological Insights
+
+1. **确立致病桥梁 / Establishing the Pathogenic Bridge：** Krt8+ ADI 细胞是推动正常肺泡上皮走向不可逆纤维化的关键枢纽。 / Krt8+ ADI cells serve as the crucial hub driving normal alveolar epithelium toward irreversible fibrosis.
+2. **EGR1 (早期先锋驱动 / Early Pioneer Driver)：** 在应激早期被剧烈激活，是启动上皮细胞重编程的“总开关”。阻断 EGR1 有望在病理发生极早期截断纤维化进程。 / Intensely activated during early stress, acting as the "master switch" for initiating epithelial reprogramming. Blocking EGR1 holds the promise of intercepting the fibrotic process at the very onset of pathogenesis.
+3. **SMAD3 (经典核心枢纽 / Classic Core Hub)：** 与 SOX4 形成共调控模块，维持纤维化微环境的持续恶化。它是极其稳健且经过验证的干预靶点。 / Forms a co-regulatory module with SOX4 to maintain the continuous deterioration of the fibrotic microenvironment. It is a highly robust and validated intervention target.
+
+---
+
+## 📂 4. 关键输出文件指南 / Key Outputs Directory
+
+所有高质量学术图表已输出至 `04_output_plots` 文件夹，核心图像包括： / All high-quality academic plots have been exported to the `04_output_plots` folder. Core images include:
+* 📍 `22_TF_Activity_Global_Heatmap_FINAL.pdf`：全局转录因子调控机制全景图（项目核心依据）。 / Global Transcription Factor Regulatory Landscape (Core project evidence).
+* 📍 `23_Target_Validation_Result.png`：SMAD3 虚拟敲除药效预测图（红蓝小提琴图对比）。 / SMAD3 Virtual Knockout Efficacy Prediction (Red/Blue Violin Plot Comparison).
+* 📍 `23_Target_Validation_Result_EGR1.png`：EGR1 虚拟敲除药效预测图（紫绿小提琴图对比）。 / EGR1 Virtual Knockout Efficacy Prediction (Purple/Green Violin Plot Comparison).
+
+---
+
+## 🔬 5. 下一步转化计划 / Translational Next Steps
+
+生物信息学干细胞（*In Silico*）环节已全部通关。下一步建议转向湿实验 (*Wet Lab*) 验证： / The bioinformatics (*In Silico*) phase is completely cleared. The next steps are recommended to pivot towards *Wet Lab* validation:
+1. **体外验证 / In Vitro Validation：** 在原代 AT2 细胞或类器官模型中，使用 siRNA 或小分子抑制剂敲低 EGR1/SMAD3，观察细胞表型转化是否被阻断。 / In primary AT2 cells or organoid models, use siRNA or small molecule inhibitors to knock down EGR1/SMAD3 and observe whether the phenotypic cellular transition is blocked.
+2. **动物模型 / In Vivo Validation：** 在博莱霉素 (Bleomycin) 诱导的小鼠模型中，通过 AAV 载体或靶向递送验证治疗效果。 / In the Bleomycin-induced mouse model, validate the therapeutic efficacy via AAV vectors or targeted delivery.
